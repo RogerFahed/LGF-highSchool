@@ -1,0 +1,23 @@
+# Disable directory listing
+Options -Indexes
+
+# Protect sensitive files
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "(config|includes)/.*\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Enable Rewrite for clean URLs
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Optional: Force HTTPS
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
